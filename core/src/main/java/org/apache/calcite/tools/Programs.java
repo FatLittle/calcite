@@ -266,8 +266,6 @@ public class Programs {
   public static Program standard(RelMetadataProvider metadataProvider) {
     final Program program1 =
         (planner, rel, requiredOutputTraits, materializations, lattices) -> {
-          planner.setRoot(rel);
-
           for (RelOptMaterialization materialization : materializations) {
             planner.addMaterialization(materialization);
           }
@@ -275,6 +273,7 @@ public class Programs {
             planner.addLattice(lattice);
           }
 
+          planner.setRoot(rel);
           final RelNode rootRel2 =
               rel.getTraitSet().equals(requiredOutputTraits)
                   ? rel
