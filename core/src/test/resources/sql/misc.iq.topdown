@@ -1,0 +1,57 @@
+# misc.iq - Miscellaneous queries
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to you under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# list is subset of group by columns.
+#
+342c342
+< EnumerableCalc(expr#0..1=[{inputs}], deptno=[$t0])
+---
+> EnumerableCalc(expr#0..1=[{inputs}], deptno=[$t1])
+344,345d343
+<     EnumerableCalc(expr#0..3=[{inputs}], deptno=[$t0])
+<       EnumerableTableScan(table=[[hr, depts]])
+349a348,349
+>     EnumerableCalc(expr#0..3=[{inputs}], deptno=[$t0])
+>       EnumerableTableScan(table=[[hr, depts]])
+381c381
+< EnumerableCalc(expr#0..1=[{inputs}], deptno=[$t0])
+---
+> EnumerableCalc(expr#0..1=[{inputs}], deptno=[$t1])
+383,384d382
+<     EnumerableCalc(expr#0..3=[{inputs}], deptno=[$t0])
+<       EnumerableTableScan(table=[[hr, depts]])
+388a387,388
+>     EnumerableCalc(expr#0..3=[{inputs}], deptno=[$t0])
+>       EnumerableTableScan(table=[[hr, depts]])
+564,565d563
+<     EnumerableCalc(expr#0..4=[{inputs}], expr#5=[0], DUMMY=[$t5])
+<       EnumerableTableScan(table=[[hr, emps]])
+567a566,567
+>     EnumerableCalc(expr#0..4=[{inputs}], expr#5=[0], DUMMY=[$t5])
+>       EnumerableTableScan(table=[[hr, emps]])
+668,673c668,672
+<   EnumerableSort(sort0=[$0], dir0=[ASC])
+<     EnumerableMergeJoin(condition=[=($2, $8)], joinType=[inner])
+<       EnumerableSort(sort0=[$2], dir0=[ASC])
+<         EnumerableTableScan(table=[[foodmart2, sales_fact_1997]])
+<       EnumerableCalc(expr#0..28=[{inputs}], expr#29=['San Francisco':VARCHAR(30)], expr#30=[=($t9, $t29)], proj#0..28=[{exprs}], $condition=[$t30])
+<         EnumerableTableScan(table=[[foodmart2, customer]])
+---
+>   EnumerableHashJoin(condition=[=($2, $8)], joinType=[inner])
+>     EnumerableSort(sort0=[$0], dir0=[ASC])
+>       EnumerableTableScan(table=[[foodmart2, sales_fact_1997]])
+>     EnumerableCalc(expr#0..28=[{inputs}], expr#29=['San Francisco':VARCHAR(30)], expr#30=[=($t9, $t29)], proj#0..28=[{exprs}], $condition=[$t30])
+>       EnumerableTableScan(table=[[foodmart2, customer]])

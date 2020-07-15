@@ -154,11 +154,15 @@ public abstract class QuidemTest {
           .build();
       new Quidem(config).execute();
     }
-    final String diff = DiffTestCase.diff(inFile, outFile);
+    final String diff = checkDiff(inFile, outFile);
     if (!diff.isEmpty()) {
       fail("Files differ: " + outFile + " " + inFile + "\n"
           + diff);
     }
+  }
+
+  protected String checkDiff(File inFile, File outFile) {
+    return DiffTestCase.diff(inFile, outFile);
   }
 
   /** Creates a command handler. */
